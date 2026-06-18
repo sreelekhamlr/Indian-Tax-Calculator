@@ -1,0 +1,14 @@
+{
+  "name": "indian-tax-calculator",
+  "version": "1.0.0",
+  "description": "Indian Income Tax Calculator — Old vs New Regime Comparison (FY 2025-26)",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "vite": "^6.0.0"
+  }
+}

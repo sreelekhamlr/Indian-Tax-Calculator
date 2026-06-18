@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Indian Income Tax Calculator FY 2025-26 — Old vs New Regime Comparison</title>
+  <meta name="description" content="Free, instant Indian Income Tax Calculator for FY 2025-26 (AY 2026-27). Compare Old vs New Regime side-by-side with slab-wise breakdown, surcharge, cess, and rebate. No login required." />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Indian Income Tax Calculator — Old vs New Regime (FY 2025-26)" />
+  <meta property="og:description" content="Compare your tax liability under Old and New regimes instantly. Slab-wise breakdown, surcharge, cess, and Section 87A rebate — all in one place." />
+  <meta property="og:type" content="website" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Indian Income Tax Calculator — FY 2025-26" />
+  <meta name="twitter:description" content="Old vs New Regime comparison with full slab-wise breakdown. Free, no login." />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  
+  <!-- Libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+  <link rel="stylesheet" href="./css/style.css" />
+
+  <noscript>
+    <style>
+      .app { display: none; }
+      .noscript-msg { display: flex !important; }
+    </style>
+  </noscript>
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to main content</a>
+  <!-- Noscript fallback -->
+  <div class="noscript-msg" style="display:none; align-items:center; justify-content:center; height:100vh; font-family:Inter,sans-serif; color:#f1f5f9; background:#0f172a; padding:2rem; text-align:center;">
+    <div>
+      <h1 style="font-size:1.5rem; margin-bottom:1rem;">JavaScript Required</h1>
+      <p>This calculator requires JavaScript to run. Please enable JavaScript in your browser settings and reload the page.</p>
+    </div>
+  </div>
+
+    <div class="dashboard-layout">
+    <!-- ─── SIDEBAR ─── -->
+    <nav class="sidebar" aria-label="Main Navigation">
+      <div class="sidebar__brand">
+        <div class="sidebar__icon" aria-hidden="true">
+          <svg width="24" height="24" viewBox="0 0 32 32" fill="none">
+            <rect width="32" height="32" rx="8" fill="url(#hg)"/>
+            <path d="M9 22V10h2.5v12H9Zm5.5-4.5V10H17v7.5h-2.5Zm5.5 4.5V10H22.5v12H20Z" fill="white" opacity="0.9"/>
+            <defs><linearGradient id="hg" x1="0" y1="0" x2="32" y2="32"><stop stop-color="#6366f1"/><stop offset="1" stop-color="#a855f7"/></linearGradient></defs>
+          </svg>
+        </div>
+        <span class="sidebar__title">Tax Calc</span>
+      </div>
+      <ul class="sidebar__menu">
+        <li><button type="button" class="sidebar__link active" data-view="overview">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg> Overview</button></li>
+        <li><button type="button" class="sidebar__link" data-view="salary">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg> Salary Details</button></li>
+        <li><button type="button" class="sidebar__link" data-view="deductions">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg> Deductions</button></li>
+      </ul>
+      <div class="sidebar__footer">
+        <button type="button" class="sidebar__link" id="sidebar-download">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg> Download PDF</button>
+      </div>
+    </nav>
+
+    <!-- ─── MAIN CONTENT ─── -->
+    <div class="main-content">
+    <!-- ─── HEADER ─── -->
+    <header class="header" role="banner">
+      <div class="header__inner">
+        <div class="header__brand">
+          <div class="header__icon" aria-hidden="true">
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+              <rect width="32" height="32" rx="8" fill="url(#hg)"/>
+              <path d="M9 22V10h2.5v12H9Zm5.5-4.5V10H17v7.5h-2.5Zm5.5 4.5V10H22.5v12H20Z" fill="white" opacity="0.9"/>
+              <defs><linearGradient id="hg" x1="0" y1="0" x2="32" y2="32"><stop stop-color="#6366f1"/><stop offset="1" stop-color="#a855f7"/></linearGradient></defs>
+            </svg>
+          </div>
+          <div>
+            <h1 class="header__title">Indian Income Tax Calculator</h1>
+            <p class="header__subtitle">Old vs New Regime Comparison</p>
+          </div>
+        </div>
+        <span class="header__badge">FY 2025-26</span>
+      </div>
+    </header>
+
+    <!-- ─── MAIN ─── -->
+    <main id="main" class="main" role="main" tabindex="-1">
+      <!-- ─── OVERVIEW VIEW ─── -->
+      <section id="view-overview" class="view view--active">
+        <div id="overview-reco-banner"></div>
+        <div class="dashboard-grid">
+          <div class="widget-card widget-regime-panels" style="grid-column: 1 / -1;">
+            <h3 class="widget-card__title">Regime Breakdowns</h3>
+            <div class="panels-container" id="dashboard-panels-container">
+              <!-- Old Regime -->
+              <div id="panel-old" class="panel panel--old">
+                <div class="panel__header">
+                  <h3 class="panel__title">Old Regime</h3>
+                  <span id="tag-old" class="panel__tag" hidden>Winner 🏆</span>
+                </div>
+                <div id="body-old" class="panel__body"></div>
+              </div>
+              <!-- New Regime -->
+              <div id="panel-new" class="panel panel--new">
+                <div class="panel__header">
+                  <h3 class="panel__title">New Regime</h3>
+                  <span id="tag-new" class="panel__tag" hidden>Winner 🏆</span>
+                </div>
+                <div id="body-new" class="panel__body"></div>
+              </div>
+            </div>
+          </div>
+          <div class="widget-card widget-donut">
+            <h3 class="widget-card__title">Income Distribution</h3>
+            <div class="chart-container"><canvas id="income-donut-chart"></canvas></div>
+          </div>
+          <div class="widget-card widget-bar">
+            <h3 class="widget-card__title">Regime Comparison</h3>
+            <div class="chart-container"><canvas id="regime-bar-chart"></canvas></div>
+          </div>
+          <div class="widget-card widget-salary-summary">
+            <h3 class="widget-card__title">Your Salary Details</h3>
+            <div id="salary-summary-content"></div>
+          </div>
+          <div class="widget-card widget-opportunities" style="grid-column: 1 / -1;">
+            <h3 class="widget-card__title">Tax-Saving Opportunities (Old Regime)</h3>
+            <div id="opportunities-content" class="opportunities-grid"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ─── SALARY VIEW ─── -->
+      <div id="view-salary" class="view" hidden>
+
+      <!-- ─── INPUT SECTION ─── -->
+      <section class="input-section" aria-labelledby="input-heading">
+        <h2 id="input-heading" class="section-title">
+          <span class="section-title__icon" aria-hidden="true">💰</span>
+          Your Salary Details
+        </h2>
+
+        <div class="card card--input">
+          <!-- Gross Salary -->
+          <div class="field" id="field-gross-salary">
+            <label for="gross-salary" class="field__label">Annual Gross Salary</label>
+            <div class="field__currency-wrap">
+              <span class="field__currency-symbol" aria-hidden="true">₹</span>
+              <input
+                type="text"
+                id="gross-salary"
+                class="field__input field__input--currency"
+                placeholder="e.g. 12,50,000"
+                inputmode="numeric"
+                autocomplete="off"
+                aria-describedby="gross-salary-hint"
+              />
+            </div>
+            <p id="gross-salary-hint" class="field__hint">Enter your total annual salary before any deductions</p>
+          </div>
+
+          <!-- Detailed Breakup Toggle -->
+          <button
+            type="button"
+            class="breakup-toggle"
+            id="breakup-toggle"
+            aria-expanded="false"
+            aria-controls="breakup-section"
+          >
+            <svg class="breakup-toggle__chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span class="breakup-toggle__text">Show Detailed Salary Breakup</span>
+          </button>
+
+          <!-- Detailed Breakup Section -->
+          <div class="breakup-section" id="breakup-section" hidden>
+            <div class="breakup-grid">
+              <!-- Basic Salary -->
+              <div class="field field--compact">
+                <label for="salary-basic" class="field__label">Basic Salary</label>
+                <div class="field__currency-wrap field__currency-wrap--sm">
+                  <span class="field__currency-symbol field__currency-symbol--sm" aria-hidden="true">₹</span>
+                  <input type="text" id="salary-basic" class="field__input field__input--sm" inputmode="numeric" autocomplete="off" placeholder="0" />
+                </div>
+              </div>
+
+              <!-- Dearness Allowance -->
+              <div class="field field--compact">
+                <label for="salary-da" class="field__label">Dearness Allowance (DA)</label>
+                <div class="field__currency-wrap field__currency-wrap--sm">
+                  <span class="field__currency-symbol field__currency-symbol--sm" aria-hidden="true">₹</span>
+                  <input type="text" id="salary-da" class="field__input field__input--sm" inputmode="numeric" autocomplete="off" placeholder="0" />
+                </div>
+              </div>
+
+              <!-- HRA -->
+              <div class="field field--compact">
+                <label for="salary-hra" class="field__label">House Rent Allowance (HRA)</label>
+                <div class="field__currency-wrap field__currency-wrap--sm">
+                  <span class="field__currency-symbol field__currency-symbol--sm" aria-hidden="true">₹</span>
+                  <input type="text" id="salary-hra" class="field__input field__input--sm" inputmode="numeric" autocomplete="off" placeholder="0" />
+                </div>
+              </div>
+
+              <!-- Special Allowance -->
+              <div class="field field--compact">
+                <label for="salary-special" class="field__label">Special Allowance</label>
+                <div class="field__currency-wrap field__currency-wrap--sm">
+                  <span class="field__currency-symbol field__currency-symbol--sm" aria-hidden="true">₹</span>
+                  <input type="text" id="salary-special" class="field__input field__input--sm" inputmode="numeric" autocomplete="off" placeholder="0" />
+                </div>
+              </div>
+
+              <!-- LTA -->
+              <div class="field field--compact">
+                <label for="salary-lta" class="field__label">Leave Travel Allowance (LTA)</label>
+                <div class="field__currency-wrap field__currency-wrap--sm">
+                  <span class="field__currency-symbol field__currency-symbol--sm" aria-hidden="true">₹</span>
+                  <input type="text" id="salary-lta" class="field__input field__input--sm" inputmode="numeric" autocomplete="off" placeholder="0" />
+                </div>
+              </div>
+
+              <!-- Bonus -->
+              <div class="field field--compact">
+                <label for="salary-bonus" class="field__label">Bonus / Performance Incentive</label>
+                <div class="field__currency-wrap field__currency-wrap--sm">
+                  <span class="field__currency-symbol field__currency-symbol--sm" aria-hidden="true">₹</span>
+                  <input type="text" id="salary-bonus" class="field__input field__input--sm" inputmode="numeric" autocomplete="off" placeholder="0" />
+                </div>
+              </div>
+
+              <!-- Employee EPF -->
+              <div class="field field--compact">
+                <label for="salary-epf-employee" class="field__label">Employee EPF Contribution</label>
+                <div class="field__currency-wrap field__currency-wrap--sm">
+                  <span class="field__currency-symbol field__currency-symbol--sm" aria-hidden="true">₹</span>
+                  <input type="text" id="salary-epf-employee" class="field__input field__input--sm" inputmode="numeric" autocomplete="off" placeholder="0" />
+                </div>
+              </div>
+
+              <!-- Employer EPF -->
+              <div class="field field--compact">
+                <label for="salary-epf-employer" class="field__label">Employer EPF Contribution</label>
+                <div class="field__currency-wrap field__currency-wrap--sm">
+                  <span class="field__currency-symbol field__currency-symbol--sm" aria-hidden="true">₹</span>
+                  <input type="text" id="salary-epf-employer" class="field__input field__input--sm" inputmode="numeric" autocomplete="off" placeholder="0" />
+                </div>
+                <p class="field__hint">Not part of taxable salary (up to 12% of Basic)</p>
+              </div>
+
+              <!-- Professional Tax -->
+              <div class="field field--compact">
+                <label for="salary-pt" class="field__label">Professional Tax (Annual)</label>
+                <div class="field__currency-wrap field__currency-wrap--sm">
+                  <span class="field__currency-symbol field__currency-symbol--sm" aria-hidden="true">₹</span>
+                  <input type="text" id="salary-pt" class="field__input field__input--sm" inputmode="numeric" autocomplete="off" placeholder="2,400" />
+                </div>
+              </div>
+
+              <!-- Gratuity -->
+              <div class="field field--compact">
+                <label for="salary-gratuity" class="field__label">Gratuity (Annual)</label>
+                <div class="field__currency-wrap field__currency-wrap--sm">
+                  <span class="field__currency-symbol field__currency-symbol--sm" aria-hidden="true">₹</span>
+                  <input type="text" id="salary-gratuity" class="field__input field__input--sm" inputmode="numeric" autocomplete="off" placeholder="0" />
+                </div>
+              </div>
+            </div>
+
+            <!-- Custom Allowances -->
+            <div class="custom-allowances" id="custom-allowances">
+              <p class="custom-allowances__title">Other Allowances</p>
+              <div id="custom-allowance-rows"></div>
+              <button type="button" class="btn-add" id="btn-add-allowance">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                  <path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+                Add Another Allowance
+              </button>
+            </div>
+
+            <!-- Computed Gross Total -->
+            <div class="computed-gross">
+              <span class="computed-gross__label">Computed Gross Salary</span>
+              <span class="computed-gross__value" id="computed-gross-value">₹0</span>
+            </div>
+          </div>
+
+          <!-- Divider -->
+          <div class="divider"></div>
+
+          <!-- User Profile Context -->
+          <div class="profile-grid">
+            <!-- Age Group -->
+            <fieldset class="field" id="field-age-group">
+              <legend class="field__label">Age Group</legend>
+              <div class="radio-group">
+                <label class="radio-pill">
+                  <input type="radio" name="age-group" value="below60" checked />
+                  <span class="radio-pill__label">Below 60</span>
+                </label>
+                <label class="radio-pill">
+                  <input type="radio" name="age-group" value="senior" />
+                  <span class="radio-pill__label">60 – 80</span>
+                </label>
+                <label class="radio-pill">
+                  <input type="radio" name="age-group" value="supersenior" />
+                  <span class="radio-pill__label">80+</span>
+                </label>
+              </div>
+            </fieldset>
+
+            <!-- City Type -->
+            <fieldset class="field" id="field-city-type">
+              <legend class="field__label">City Type</legend>
+              <div class="radio-group">
+                <label class="radio-pill">
+                  <input type="radio" name="city-type" value="metro" checked />
+                  <span class="radio-pill__label">Metro</span>
+                </label>
+                <label class="radio-pill">
+                  <input type="radio" name="city-type" value="nonmetro" />
+                  <span class="radio-pill__label">Non-Metro</span>
+                </label>
+              </div>
+            </fieldset>
+
+            <!-- Employer Type -->
+            <fieldset class="field" id="field-employer-type">
+              <legend class="field__label">Employer Type</legend>
+              <div class="radio-group">
+                <label class="radio-pill">
+                  <input type="radio" name="employer-type" value="private" checked />
+                  <span class="radio-pill__label">Private</span>
+                </label>
+                <label class="radio-pill">
+                  <input type="radio" name="employer-type" value="government" />
+                  <span class="radio-pill__label">Government</span>
+                </label>
+              </div>
+            </fieldset>
+          </div>
+        </div>
+      </section>
+      </div>
+
+      <!-- ─── DEDUCTIONS VIEW ─── -->
+      <div id="view-deductions" class="view" hidden>
+      <!-- ─── DEDUCTIONS SECTION (PHASE 3) ─── -->
+      <section class="deductions-section" aria-labelledby="deductions-heading">
+        <h2 id="deductions-heading" class="section-title">
+          <span class="section-title__icon" aria-hidden="true">🛡️</span>
+          Deductions & Exemptions (Old Regime)
+        </h2>
+
+        <div class="card card--deductions">
+          <p class="card__description">These deductions apply primarily to the <strong>Old Tax Regime</strong>. The New Regime offers a flat ₹75,000 standard deduction but does not allow most of these exemptions.</p>
+
+          <div class="accordion-group">
+            
+            <!-- HRA Exemption -->
+            <details class="accordion" open>
+              <summary class="accordion__summary">
+                <span class="accordion__title">HRA Exemption</span>
+                <svg class="accordion__icon" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                  <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </summary>
+              <div class="accordion__content">
+                <div class="field field--compact">
+                  <label for="rent-paid" class="field__label">Rent Paid (Monthly) <i class="tooltip-icon" tabindex="0" data-tooltip="HRA exemption is calculated based on rent, Basic+DA, and city. Not applicable if you live in own house.">i</i></label>
+                  <div class="field__currency-wrap field__currency-wrap--sm">
+                    <span class="field__currency-symbol field__currency-symbol--sm" aria-hidden="true">₹</span>
+                    <input type="text" id="rent-paid" class="field__input field__input--sm" inputmode="numeric" autocomplete="off" placeholder="0" />
+                  </div>
+                  <p class="field__hint">HRA exemption is calculated automatically based on your rent, Basic Salary, DA, and city type.</p>
+                  <p class="field__warning" id="warning-rent" style="color: var(--accent-amber); font-size: var(--text-xs); margin-top: 4px;" hidden>Warning: Rent paid exceeds Basic Salary + DA.</p>
+                </div>
+              </div>
+            </details>
+
+            <!-- Section 80C -->
+            <details class="accordion" open>
+              <summary class="accordion__summary">
+                <span class="accordion__title">Section 80C Investments <span class="accordion__badge">Max ₹1.5L</span></span>
+                <svg class="accordion__icon" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                  <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </summary>
+              <div class="accordion__content">
+                
+                <!-- 80C Progress Bar -->
+                <div class="progress-bar-wrap">
+                  <div class="progress-bar-header">
+                    <span class="progress-bar-label">Total 80C Utilized</span>
+                    <span class="progress-bar-value" id="total-80c-value">₹0 / ₹1.5L</span>
+                  </div>
+                  <div class="progress-bar">
+                    <div class="progress-bar__fill" id="progress-80c" style="width: 0%;"></div>
+                  </div>
+                  <p class="progress-bar-warning" id="warning-80c" hidden>You have exceeded the ₹1.5 Lakh limit. Only ₹1.5 Lakh will be considered for deduction.</p>
+                </div>
+
+                <div class="breakup-grid breakup-grid--deductions">
+                  <!-- EPF is auto-linked from salary -->
+                  <div class="field field--compact">
+                    <label for="ded-epf" class="field__label">Employee EPF (Auto-linked) <i class="tooltip-icon" tabindex="0" data-tooltip="Your contribution to EPF, auto-calculated as 12% of Basic up to ₹15k/month. Qualifies for 80C.">i</i></label>
+                    <div class="field__currency-wrap field__currency-wrap--sm">
+                      <span class="field__currency-symbol field__currency-symbol--sm" aria-hidden="true">₹</span>
+                      <input type="text" id="ded-epf" class="field__input field__input--sm" disabled placeholder="0" />
+                    </div>
+                  </div>
+
+                  <div class="field field--compact">
+                    <label for="ded-ppf" class="field__label">PPF (Public Provident Fund) <i class="tooltip-icon" tabindex="0" data-tooltip="Voluntary contribution to PPF. Max limit for 80C aggregate is ₹1.5L.">i</i></label>
+                    <div class="field__currency-wrap field__currency-wrap--sm">
+                      <span class="field__currency-symbol field__currency-symbol--sm" aria-hidden="true">₹</span>
+                      <input type="text" id="ded-ppf" class="field__input field__input--sm ded-80c" inputmode="numeric" autocomplete="off" placeholder="0" />
+                    </div>
+                  </div>
+
+                  <div class="field field--compact">
+                    <label for="ded-elss" class="field__label">ELSS Mutual Funds <i class="tooltip-icon" tabindex="0" data-tooltip="Equity Linked Savings Scheme mutual funds. Max limit for 80C aggregate is ₹1.5L.">i</i></label>
+                    <div class="field__currency-wrap field__currency-wrap--sm">
+                      <span class="field__currency-symbol field__currency-symbol--sm" aria-hidden="true">₹</span>
+                      <input type="text" id="ded-elss" class="field__input field__input--sm ded-80c" inputmode="numeric" autocomplete="off" placeholder="0" />
+                    </div>
+                  </div>
+
+                  <div class="field field--compact">
+                    <label for="ded-lic" class="field__label">Life Insurance Premium <i class="tooltip-icon" tabindex="0" data-tooltip="Premium paid for life insurance policies for self, spouse, or children.">i</i></label>
+                    <div class="field__currency-wrap field__currency-wrap--sm">
+                      <span class="field__currency-symbol field__currency-symbol--sm" aria-hidden="true">₹</span>
+                      <input type="text" id="ded-lic" class="field__input field__input--sm ded-80c" inputmode="numeric" autocomplete="off" placeholder="0" />
+                    </div>
+                  </div>
+
+                  <div class="field field--compact">
+                    <label for="ded-tuition" class="field__label">Children's Tuition Fees <i class="tooltip-icon" tabindex="0" data-tooltip="Tuition fees paid for up to 2 children. Does not include development fees or transport charges.">i</i></label>
+                    <div class="field__currency-wrap field__currency-wrap--sm">
+                      <span class="field__currency-symbol field__currency-symbol--sm" aria-hidden="true">₹</span>
+                      <input type="text" id="ded-tuition" class="field__input field__input--sm ded-80c" inputmode="numeric" autocomplete="off" placeholder="0" />
+                    </div>
+                  </div>
+
+                  <div class="field field--compact">
+                    <label for="ded-homeloan" class="field__label">Home Loan Principal <i class="tooltip-icon" tabindex="0" data-tooltip="Principal repayment of housing loan.">i</i></label>
+                    <div class="field__currency-wrap field__currency-wrap--sm">
+                      <span class="field__currency-symbol field__currency-symbol--sm" aria-hidden="true">₹</span>
+                      <input type="text" id="ded-homeloan" class="field__input field__input--sm ded-80c" inputmode="numeric" autocomplete="off" placeholder="0" />
+                    </div>
+                  </div>
+
+                  <div class="field field--compact">
+                    <label for="ded-other-80c" class="field__label">Other 80C (NSC, SSY, 5-yr FD) <i class="tooltip-icon" tabindex="0" data-tooltip="Other eligible investments under Section 80C (National Savings Certificate, Sukanya Samriddhi Yojana, 5-year FD, etc).">i</i></label>
+                    <div class="field__currency-wrap field__currency-wrap--sm">
+                      <span class="field__currency-symbol field__currency-symbol--sm" aria-hidden="true">₹</span>
+                      <input type="text" id="ded-other-80c" class="field__input field__input--sm ded-80c" inputmode="numeric" autocomplete="off" placeholder="0" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </details>
+
+            <!-- Section 80D -->
+            <details class="accordion" open>
+              <summary class="accordion__summary">
+                <span class="accordion__title">Section 80D (Health Insurance)</span>
+                <svg class="accordion__icon" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                  <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </summary>
+              <div class="accordion__content">
+                <div class="breakup-grid breakup-grid--deductions">
+                  <div class="field field--compact">
+                    <label for="ded-80d-self" class="field__label">Self & Family Premium <i class="tooltip-icon" tabindex="0" data-tooltip="Premium for health insurance for self, spouse, and children. Limit is ₹25k (₹50k if senior citizen).">i</i></label>
+                    <div class="field__currency-wrap field__currency-wrap--sm">
+                      <span class="field__currency-symbol field__currency-symbol--sm" aria-hidden="true">₹</span>
+                      <input type="text" id="ded-80d-self" class="field__input field__input--sm ded-80d" inputmode="numeric" autocomplete="off" placeholder="0" />
+                    </div>
+                    <p class="field__hint">Limit: ₹25k (₹50k if senior citizen)</p>
+                  </div>
+
+                  <div class="field field--compact">
+                    <label for="ded-80d-parents" class="field__label">Parents Premium <i class="tooltip-icon" tabindex="0" data-tooltip="Premium for health insurance for parents. Limit is ₹25k (₹50k if parents are senior citizens).">i</i></label>
+                    <div class="field__currency-wrap field__currency-wrap--sm">
+                      <span class="field__currency-symbol field__currency-symbol--sm" aria-hidden="true">₹</span>
+                      <input type="text" id="ded-80d-parents" class="field__input field__input--sm ded-80d" inputmode="numeric" autocomplete="off" placeholder="0" />
+                    </div>
+                    <label class="checkbox-label" style="margin-top: 0.5rem; display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                      <input type="checkbox" id="parents-senior" class="checkbox-input" />
+                      <span class="checkbox-text" style="font-size: var(--text-sm); color: var(--text-secondary); user-select: none;">Are parents Senior Citizens? (Raises limit to ₹50k)</span>
+                    </label>
+                  </div>
+
+                  <div class="field field--compact">
+                    <label for="ded-80d-health" class="field__label">Preventive Health Check-up <i class="tooltip-icon" tabindex="0" data-tooltip="Up to ₹5,000 for preventive health check-ups (included within overall 80D limit).">i</i></label>
+                    <div class="field__currency-wrap field__currency-wrap--sm">
+                      <span class="field__currency-symbol field__currency-symbol--sm" aria-hidden="true">₹</span>
+                      <input type="text" id="ded-80d-health" class="field__input field__input--sm ded-80d" inputmode="numeric" autocomplete="off" placeholder="0" />
+                    </div>
+                    <p class="field__hint">Limit: ₹5k (included in overall limit)</p>
+                  </div>
+                </div>
+              </div>
+            </details>
+
+            <!-- National Pension System (NPS) -->
+            <details class="accordion">
+              <summary class="accordion__summary">
+                <span class="accordion__title">National Pension System (NPS)</span>
+                <svg class="accordion__icon" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                  <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </summary>
+              <div class="accordion__content">
+                <div class="breakup-grid breakup-grid--deductions">
+                  <div class="field field--compact">
+                    <label for="ded-80ccd1b" class="field__label">Self Contribution - 80CCD(1B) <i class="tooltip-icon" tabindex="0" data-tooltip="Additional deduction up to ₹50,000 for NPS Tier-1, over and above the ₹1.5L 80C limit.">i</i></label>
+                    <div class="field__currency-wrap field__currency-wrap--sm">
+                      <span class="field__currency-symbol field__currency-symbol--sm" aria-hidden="true">₹</span>
+                      <input type="text" id="ded-80ccd1b" class="field__input field__input--sm" inputmode="numeric" autocomplete="off" placeholder="0" />
+                    </div>
+                    <p class="field__hint">Extra ₹50k limit over 80C.</p>
+                  </div>
+
+                  <div class="field field--compact">
+                    <label for="ded-80ccd2" class="field__label">Employer Contribution - 80CCD(2) <i class="tooltip-icon" tabindex="0" data-tooltip="Employer's contribution to NPS. Up to 10% of Basic (14% for Govt). Available in both regimes.">i</i></label>
+                    <div class="field__currency-wrap field__currency-wrap--sm">
+                      <span class="field__currency-symbol field__currency-symbol--sm" aria-hidden="true">₹</span>
+                      <input type="text" id="ded-80ccd2" class="field__input field__input--sm" inputmode="numeric" autocomplete="off" placeholder="0" />
+                    </div>
+                    <p class="field__hint" style="color: var(--accent-indigo); font-weight: 500;">Available in both Regimes! (10% of Basic)</p>
+                  </div>
+                </div>
+              </div>
+            </details>
+
+            <!-- Home Loan & Real Estate -->
+            <details class="accordion">
+              <summary class="accordion__summary">
+                <span class="accordion__title">Home Loan Interest</span>
+                <svg class="accordion__icon" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                  <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </summary>
+              <div class="accordion__content">
+                <div class="breakup-grid breakup-grid--deductions">
+                  <div class="field field--compact">
+                    <label for="ded-24b" class="field__label">Interest on Housing Loan - 24(b) <i class="tooltip-icon" tabindex="0" data-tooltip="Interest paid on home loan for a self-occupied property. Limit ₹2,00,000.">i</i></label>
+                    <div class="field__currency-wrap field__currency-wrap--sm">
+                      <span class="field__currency-symbol field__currency-symbol--sm" aria-hidden="true">₹</span>
+                      <input type="text" id="ded-24b" class="field__input field__input--sm" inputmode="numeric" autocomplete="off" placeholder="0" />
+                    </div>
+                    <p class="field__hint">Limit: ₹2L for self-occupied.</p>
+                  </div>
+
+                  <div class="field field--compact">
+                    <label for="ded-80eea" class="field__label">First-Time Buyer - 80EEA <i class="tooltip-icon" tabindex="0" data-tooltip="Limit: ₹1.5L. Loan must be sanctioned between 1 Apr 2019 and 31 Mar 2022. Stamp duty value ≤ ₹45 lakh.">i</i></label>
+                    <div class="field__currency-wrap field__currency-wrap--sm">
+                      <span class="field__currency-symbol field__currency-symbol--sm" aria-hidden="true">₹</span>
+                      <input type="text" id="ded-80eea" class="field__input field__input--sm" inputmode="numeric" autocomplete="off" placeholder="0" />
+                    </div>
+                    <p class="field__hint">Limit: ₹1.5L. Loan must be sanctioned between 2019-2022.</p>
+                  </div>
+                </div>
+              </div>
+            </details>
+
+            <!-- Other Deductions -->
+            <details class="accordion">
+              <summary class="accordion__summary">
+                <span class="accordion__title">Other Deductions (80E, 80G, Savings)</span>
+                <svg class="accordion__icon" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                  <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </summary>
+              <div class="accordion__content">
+                <div class="breakup-grid breakup-grid--deductions">
+                  <div class="field field--compact">
+                    <label for="ded-80e" class="field__label">Education Loan Interest - 80E <i class="tooltip-icon" tabindex="0" data-tooltip="Deduction available for interest paid on education loan for higher education. Available for 8 years.">i</i></label>
+                    <div class="field__currency-wrap field__currency-wrap--sm">
+                      <span class="field__currency-symbol field__currency-symbol--sm" aria-hidden="true">₹</span>
+                      <input type="text" id="ded-80e" class="field__input field__input--sm" inputmode="numeric" autocomplete="off" placeholder="0" />
+                    </div>
+                    <p class="field__hint">No upper limit.</p>
+                  </div>
+
+                  <div class="field field--compact">
+                    <label for="ded-80g-100" class="field__label">Donations (100% deduction) - 80G <i class="tooltip-icon" tabindex="0" data-tooltip="Donations to relief funds like PM CARES, National Defence Fund.">i</i></label>
+                    <div class="field__currency-wrap field__currency-wrap--sm">
+                      <span class="field__currency-symbol field__currency-symbol--sm" aria-hidden="true">₹</span>
+                      <input type="text" id="ded-80g-100" class="field__input field__input--sm" inputmode="numeric" autocomplete="off" placeholder="0" />
+                    </div>
+                    <p class="field__hint">E.g., PM CARES Fund.</p>
+                  </div>
+
+                  <div class="field field--compact">
+                    <label for="ded-80g-50" class="field__label">Donations (50% deduction) - 80G <i class="tooltip-icon" tabindex="0" data-tooltip="Donations to trusts like PMNRF, subject to 10% of Adjusted Gross Total Income cap.">i</i></label>
+                    <div class="field__currency-wrap field__currency-wrap--sm">
+                      <span class="field__currency-symbol field__currency-symbol--sm" aria-hidden="true">₹</span>
+                      <input type="text" id="ded-80g-50" class="field__input field__input--sm" inputmode="numeric" autocomplete="off" placeholder="0" />
+                    </div>
+                    <p class="field__hint">E.g., PMNRF, subject to qualifying limits.</p>
+                  </div>
+
+                  <div class="field field--compact">
+                    <label for="ded-80tta" class="field__label">Savings Account Interest - 80TTA/TTB <i class="tooltip-icon" tabindex="0" data-tooltip="Interest on savings account. Limit ₹10k for non-seniors (80TTA), ₹50k for seniors (80TTB).">i</i></label>
+                    <div class="field__currency-wrap field__currency-wrap--sm">
+                      <span class="field__currency-symbol field__currency-symbol--sm" aria-hidden="true">₹</span>
+                      <input type="text" id="ded-80tta" class="field__input field__input--sm" inputmode="numeric" autocomplete="off" placeholder="0" />
+                    </div>
+                    <p class="field__hint" id="hint-80tta">Limit: ₹10k (₹50k for senior citizens).</p>
+                  </div>
+
+                  <div class="field field--compact">
+                    <label for="ded-lta" class="field__label">Leave Travel Allowance Exemption Claimed <i class="tooltip-icon" tabindex="0" data-tooltip="Exemption for actual travel expenses incurred for domestic travel. Only travel fare is exempt.">i</i></label>
+                    <div class="field__currency-wrap field__currency-wrap--sm">
+                      <span class="field__currency-symbol field__currency-symbol--sm" aria-hidden="true">₹</span>
+                      <input type="text" id="ded-lta" class="field__input field__input--sm" inputmode="numeric" autocomplete="off" placeholder="0" />
+                    </div>
+                    <p class="field__hint">Limited to actual LTA received in salary.</p>
+                  </div>
+                </div>
+              </div>
+            </details>
+
+          </div>
+        </div>
+      </section>
+
+      </div>
+    </main>
+
+    <!-- ─── FOOTER ─── -->
+    <footer class="footer" role="contentinfo">
+      <div class="footer__inner">
+        <p class="footer__privacy">
+          <span aria-hidden="true">🔒</span>
+          Your data stays in your browser. We do not store or transmit any financial information.
+        </p>
+        <p class="footer__disclaimer">
+          This is an estimate based on the Income Tax Act provisions for FY 2025-26. Consult a qualified tax professional before filing your return.
+        </p>
+        <p class="footer__credit">
+          Indian Income Tax Calculator &middot; FY 2025-26 (AY 2026-27)
+        </p>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast">Link copied to clipboard!</div>
+
+  <script type="module" src="./js/main.js?v=2" defer></script>
+</body>
+</html>
